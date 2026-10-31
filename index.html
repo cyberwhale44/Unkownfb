@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnknownFB</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #222;
+}
+
+header {
+  background: #1877f2;
+  color: white;
+  padding: 18px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 15px;
+}
+
+.card {
+  background: white;
+  padding: 16px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+button {
+  background: #1877f2;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background: white;
+  padding: 15px 5px;
+  position: sticky;
+  bottom: 0;
+}
+
+nav button {
+  background: white;
+  color: #1877f2;
+  padding: 8px;
+  font-size: 13px;
+}
+
+.post {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.post h4 {
+  margin: 0 0 10px;
+}
+
+#message {
+  color: green;
+}
+</style>
+</head>
+
+<body>
+
+<header>UnknownFB</header>
+
+<div class="container">
+
+<section id="home">
+  <div class="card">
+    <h3>Welcome to UnknownFB</h3>
+    <p>Connect, share and discover.</p>
+    <input id="username" placeholder="Your display name">
+    <textarea id="postText" placeholder="What's on your mind?"></textarea>
+    <button onclick="createPost()">Create Post</button>
+    <p id="message"></p>
+  </div>
+
+  <h3>News Feed</h3>
+  <div id="feed">
+    <div class="post">
+      <h4>UnknownFB</h4>
+      <p>Welcome to our new social community!</p>
+    </div>
+  </div>
+</section>
+
+<section id="friends" hidden>
+  <div class="card">
+    <h3>Friends</h3>
+    <p>Your friends section will appear here.</p>
+  </div>
+</section>
+
+<section id="messages" hidden>
+  <div class="card">
+    <h3>Messages</h3>
+    <p>Your messaging section will appear here.</p>
+  </div>
+</section>
+
+<section id="profile" hidden>
+  <div class="card">
+    <h3>My Profile</h3>
+    <p>Your profile information will appear here.</p>
+  </div>
+</section>
+
+</div>
+
+<nav>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('friends')">Friends</button>
+  <button onclick="showPage('messages')">Messages</button>
+  <button onclick="showPage('profile')">Profile</button>
+</nav>
+
+<script>
+function showPage(page) {
+  ['home','friends','messages','profile'].forEach(id => {
+    document.getElementById(id).hidden = id !== page;
+  });
+}
+
+function createPost() {
+  const name = document.getElementById('username').value.trim();
+  const text = document.getElementById('postText').value.trim();
+
+  if (!name || !text) {
+    document.getElementById('message').textContent =
+      'Enter your name and write a post first.';
+    return;
+  }
+
+  const post = document.createElement('div');
+  post.className = 'post';
+
+  const heading = document.createElement('h4');
+  heading.textContent = name;
+
+  const paragraph = document.createElement('p');
+  paragraph.textContent = text;
+
+  post.append(heading, paragraph);
+  document.getElementById('feed').prepend(post);
+
+  document.getElementById('postText').value = '';
+  document.getElementById('message').textContent = 'Post created!';
+}
+</script>
+
+</body>
+</html>
